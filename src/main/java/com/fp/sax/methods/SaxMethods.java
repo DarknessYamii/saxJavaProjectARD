@@ -14,12 +14,19 @@ import com.fp.sax.model.TrackElement;
 
 public class SaxMethods {
 
+	/**
+	 * Print every row of XML
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 */
 	public void searchAll() throws ParserConfigurationException, SAXException, IOException {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser saxParser = factory.newSAXParser();
 		FestivalHandler handler = new FestivalHandler();
 		saxParser.parse("src/main/java/com/fp/resource/festival2DAM.xml", handler);
 		List<TrackElement> list = handler.getTrack();
+		// Print every attribute
 		for (TrackElement track : list) {
 			System.out.println("TrackURI: " + track.getTrackURI());
 			System.out.println("TrackName: " + track.getTrackName());

@@ -9,7 +9,11 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.fp.sax.model.FestivalElements;
 import com.fp.sax.model.TrackElement;
-
+/**
+ * Handler of XML to print results
+ * @author andre
+ *
+ */
 public class FestivalHandler extends DefaultHandler {
 	private boolean TrackURI, TrackName, ArtistURIs, ArtistNames, AlbumURI, AlbumName, AlbumArtistURIs,AlbumArtistNames,AlbumReleaseDate, AlbumImageURL,TrackPreviewURL,AddedBy,AddedAt;
 	private boolean DiscNumber, TrackNumber, TrackDuration, Popularity;
@@ -18,6 +22,9 @@ public class FestivalHandler extends DefaultHandler {
 	private TrackElement currentTrack = new TrackElement();
 	private List<TrackElement> track = new ArrayList<TrackElement>();
 	@Override
+	/**
+	 * Identify if exist each element of the xml
+	 */
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if (qName.equals(FestivalElements.TRACK_URL.getName())) {
 			TrackURI = true;
@@ -78,6 +85,7 @@ public class FestivalHandler extends DefaultHandler {
 	}
 
 	@Override
+	// Write the element you receive by startElement
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		if (TrackURI) {
 			currentTrack.setTrackURI(new String(ch, start, length));
@@ -154,13 +162,14 @@ public class FestivalHandler extends DefaultHandler {
 	}
 
 	@Override
+	// Get Name and it add every row modified by Characters into the list Track
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		if (qName.equals(FestivalElements.TRACK_NAME.getName())) {
 			track.add(currentTrack);
 			currentTrack = new TrackElement();
 		}
 	}
-
+	// Return List
 	public List<TrackElement> getTrack() {
 		return track;
 	}
